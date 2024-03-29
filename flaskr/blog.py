@@ -54,7 +54,7 @@ def create():
     return render_template('blog/create.html')
 
 
-def get_movie_review(id, check_author=True):
+def get_movie_review(id, check_author=True): # TODO make sure get_post is not used somewhere els
     movie_review = get_db().execute(
         'SELECT mr.id, movie_name, actors, director, length, genre, rating, review, mr.created, mr.author_id, username'
         ' FROM movie_review mr JOIN user u ON mr.author_id = u.id'
@@ -71,29 +71,34 @@ def get_movie_review(id, check_author=True):
     return movie_review
 
 
-
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
     post = get_movie_review(id)
 
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        movie_name = request.form['movie_name']
+        actors = request.form['actors']
+        director = request.form['director']
+        length = request.form['length']
+        genre = request.form['genre']
+        rating = request.form['rating']
+        review_text = request.form['review']
         error = None
 
-        if not title:
-            error = 'Title is required.'
+        if not movie_name:
+            error = 'Movie name is required.'
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
+                'UPDATE movie_review SET movie_name = ?, actors = ?, director = ?, length = ?, genre = ?, rating = ?,' \
+                'review = ?'
                 ' WHERE id = ?',
-                (title, body, id)
-            )
+                (movie_name, actors, director, length, genre, rating, review_text, id)
+            ) # TODO make sure the above \ doesn't create any issues
             db.commit()
             return redirect(url_for('blog.index'))
 
@@ -105,6 +110,6 @@ def update(id):
 def delete(id):
     get_movie_review(id)
     db = get_db()
-    db.execute('DELETE FROM post WHERE id = ?', (id,))
+    db.execute('DELETE FROM movie_review WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
