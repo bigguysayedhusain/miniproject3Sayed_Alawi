@@ -54,27 +54,28 @@ def create():
     return render_template('blog/create.html')
 
 
-def get_post(id, check_author=True):
-    post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
+def get_movie_review(id, check_author=True):
+    movie_review = get_db().execute(
+        'SELECT mr.id, movie_name, actors, director, length, genre, rating, review, mr.created, mr.author_id, username'
+        ' FROM movie_review mr JOIN user u ON mr.author_id = u.id'
+        ' WHERE mr.id = ?',
         (id,)
     ).fetchone()
 
-    if post is None:
-        abort(404, f"Post id {id} doesn't exist.")
+    if movie_review is None:
+        abort(404, f"Movie review id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
+    if check_author and movie_review['author_id'] != g.user['id']:
         abort(403)
 
-    return post
+    return movie_review
+
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    post = get_post(id)
+    post = get_movie_review(id)
 
     if request.method == 'POST':
         title = request.form['title']
@@ -102,7 +103,7 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_post(id)
+    get_movie_review(id)
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
