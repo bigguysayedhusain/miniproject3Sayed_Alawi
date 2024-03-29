@@ -1,20 +1,42 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+  <h1>{% block title %}Edit "{{ review['movie_name'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+    <label for="movie_name">Movie Name</label>
+    <input name="movie_name" id="movie_name"
+      value="{{ request.form['movie_name'] or review['movie_name'] }}" required>
+
+    <label for="actors">Actors</label>
+    <input name="actors" id="actors"
+      value="{{ request.form['actors'] or review['actors'] }}" required>
+
+    <label for="director">Director</label>
+    <input name="director" id="director"
+      value="{{ request.form['director'] or review['director'] }}" required>
+
+    <label for="length">Length (minutes)</label>
+    <input type="number" name="length" id="length"
+      value="{{ request.form['length'] or review['length'] }}" required>
+
+    <label for="genre">Genre</label>
+    <input name="genre" id="genre"
+      value="{{ request.form['genre'] or review['genre'] }}" required>
+
+    <label for="rating">Rating</label>
+    <input type="number" name="rating" id="rating"
+      value="{{ request.form['rating'] or review['rating'] }}" required min="1" max="10">
+
+    <label for="review">Review</label>
+    <textarea name="review" id="review" required>{{ request.form['review'] or review['review'] }}</textarea>
+
     <input type="submit" value="Save">
   </form>
   <hr>
-  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+  <form action="{{ url_for('blog.delete', id=review['id']) }}" method="post">
     <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
   </form>
 {% endblock %}
