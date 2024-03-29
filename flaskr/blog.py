@@ -12,12 +12,12 @@ bp = Blueprint('blog', __name__)
 @bp.route('/')
 def index():
     db = get_db()
-    posts = db.execute(
+    reviews = db.execute(
         'SELECT mr.id, movie_name, actors, director, length, genre, rating, review, mr.created, mr.author_id, username'
         ' FROM movie_review mr JOIN user u ON mr.author_id = u.id'
         ' ORDER BY mr.created DESC'
     ).fetchall()
-    return render_template('blog/index.html', posts=posts)
+    return render_template('blog/index.html', reviews=reviews)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -74,7 +74,7 @@ def get_movie_review(id, check_author=True): # TODO make sure get_post is not us
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    post = get_movie_review(id)
+    review = get_movie_review(id)
 
     if request.method == 'POST':
         movie_name = request.form['movie_name']
@@ -102,7 +102,7 @@ def update(id):
             db.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/update.html', post=post)
+    return render_template('blog/update.html', review=review)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
