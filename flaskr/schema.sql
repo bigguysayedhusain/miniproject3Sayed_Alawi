@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS movie_review;
+DROP TABLE IF EXISTS post; -- TODO Remove this line before the final commit
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,11 +8,27 @@ CREATE TABLE user (
   password TEXT NOT NULL
 );
 
-CREATE TABLE post (
+CREATE TABLE movie_review (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  title TEXT NOT NULL,
-  body TEXT NOT NULL,
+  movie_name TEXT NOT NULL,
+  actors TEXT NOT NULL,
+  director TEXT NOT NULL,
+  length INTEGER NOT NULL, -- TODO Check how add limit and label next to it
+  genre TEXT NOT NULL,
+  rating INTEGER NOT NULL, -- TODO Check how add limit and label next to it
+  review TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+
+-- TODO remove the below section before the final commit
+-- CREATE TABLE post (
+--   id INTEGER PRIMARY KEY AUTOINCREMENT,
+--   author_id INTEGER NOT NULL,
+--   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--   title TEXT NOT NULL,
+--   body TEXT NOT NULL,
+--   FOREIGN KEY (author_id) REFERENCES user (id)
+-- );
