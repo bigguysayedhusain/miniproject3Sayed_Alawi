@@ -24,21 +24,29 @@ def index():
 @login_required
 def create():
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        movie_name = request.form['movie_name']
+        actors = request.form['actors']
+        director = request.form['director']
+        length = request.form['length']
+        genre = request.form['genre']
+        rating = request.form['rating']
+        review = request.form['review']
         error = None
 
-        if not title:
-            error = 'Title is required.'
+        if not movie_name:
+            error = 'Movie name is required.'
+
+        if not review:
+            error = 'Review is required.' if error is None else error
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO movie_review (movie_name, actors, director, length, genre, rating, review, author_id)'
+                ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                (movie_name, actors, director, int(length), genre, int(rating), review, g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.index'))
