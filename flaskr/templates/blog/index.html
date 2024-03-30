@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Movie Reviews{% endblock %}</h1>
+  <h1 class="center">{% block title %}Movie Reviews{% endblock %}</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('blog.create') }}">New Review</a>
   {% endif %}
@@ -12,16 +12,15 @@
     <article class="review">
       <header>
         <div>
-          <h1>{{ review['movie_name'] }}</h1>
+          <h2>{{ review['movie_name'] }}</h2>
           <div class="about">by {{ review['username'] }} on {{ review['created'].strftime('%Y-%m-%d') }}</div>
         </div>
-        <p>{{ review['genre'] }} | {{ review['length'] }} mins</p>
-        <p>Rating: {{ review['rating'] }}/10</p>
+          <p>{{ review['genre'] }} | {{ review['length'] }} mins</p>
+          <p>Rating: {{ review['rating'] }}/10</p>
         {% if g.user['id'] == review['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=review['id']) }}">Edit</a>
         {% endif %}
       </header>
-
 
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -29,7 +28,8 @@
       </button>
 
       <!-- Modal -->
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
