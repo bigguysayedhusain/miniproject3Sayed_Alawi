@@ -15,12 +15,47 @@
           <h1>{{ review['movie_name'] }}</h1>
           <div class="about">by {{ review['username'] }} on {{ review['created'].strftime('%Y-%m-%d') }}</div>
         </div>
+        <p>{{ review['genre'] }} | {{ review['length'] }} mins</p>
+        <p>Rating: {{ review['rating'] }}/10</p>
         {% if g.user['id'] == review['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=review['id']) }}">Edit</a>
         {% endif %}
       </header>
-      <p>{{ review['genre'] }} | {{ review['length'] }} mins | Rating: {{ review['rating'] }}/10</p>
-      <p class="body">{{ review['review'] }}</p>
+
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Full Review
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ review['movie_name'] }}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h6>Actors:</h6>
+              <p class="body">{{ review['actors'] }}</p>
+              <h6>Director:</h6>
+              <p class="body">{{ review['director'] }}</p>
+              <h6>Length (minutes):</h6>
+              <p class="body">{{ review['length'] }}</p>
+              <h6>Genre:</h6>
+              <p class="body">{{ review['genre'] }}</p>
+              <h6>Rating (0/10):</h6>
+              <p class="body">{{ review['rating'] }}</p>
+              <h6>Review:</h6>
+              <p class="body">{{ review['review'] }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </article>
     {% if not loop.last %}
       <hr>
