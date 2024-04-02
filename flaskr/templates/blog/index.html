@@ -37,18 +37,20 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <h6>Actors:</h6>
-              <p class="body">{{ review['actors'] }}</p>
-              <h6>Director:</h6>
-              <p class="body">{{ review['director'] }}</p>
-              <h6>Length (minutes):</h6>
-              <p class="body">{{ review['length'] }}</p>
-              <h6>Genre:</h6>
-              <p class="body">{{ review['genre'] }}</p>
-              <h6>Rating (0/10):</h6>
-              <p class="body">{{ review['rating'] }}</p>
-              <h6>Review:</h6>
-              <p class="body">{{ review['review'] }}</p>
+              <div class="modal-content">
+                <h6>Actors:</h6>
+                <p class="body">{{ review['actors'] }}</p>
+                <h6>Director:</h6>
+                <p class="body">{{ review['director'] }}</p>
+                <h6>Length (minutes):</h6>
+                <p class="body">{{ review['length'] }}</p>
+                <h6>Genre:</h6>
+                <p class="body">{{ review['genre'] }}</p>
+                <h6>Rating (0/10):</h6>
+                <p class="body">{{ review['rating'] }}</p>
+                <h6>Review:</h6>
+                <p class="body">{{ review['review'] }}</p>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
