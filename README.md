@@ -14,18 +14,19 @@ existing ones, or delete them if desired. To enhance the cinematic experience, t
 
 ## Getting Started
 
+### Install requirements with pip
+First Step: Install all requirements
+```
+pip install -r requirments.txt
+```
+
 ### Dependencies
+Second Step:
 The application will use a SQLite database to store users and movie reviews. Python comes with built-in support for 
 SQLite in the sqlite3 module. To initiate the database, run the below command:
 
 ```
 flask --app flaskr init-db
-```
-
-### Install requirements with pip
-
-```
-pip install -r requirments.txt
 ```
 
 ### Executing program
